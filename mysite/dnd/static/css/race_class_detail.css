@@ -1,0 +1,17 @@
+.race-detail-container {
+    padding: 1em;
+    text-align: justify;
+}
+
+.race-detail-container img {
+    width: 100%;
+}
+
+.race-details div {
+    margin-bottom: 0.7em;
+}
+
+.race-details p, .race-details div p {
+    margin: 0;
+    padding: 0;
+  }

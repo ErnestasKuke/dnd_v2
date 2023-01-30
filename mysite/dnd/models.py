@@ -6,6 +6,7 @@ from django.db import models
 from django.db import migrations
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
+from .extra import get_first_img
 
 
 # Create your models here.
@@ -73,9 +74,8 @@ class RaceTraits(models.Model):
 
 class Subrace(models.Model):
     name = models.CharField('Name', max_length=200, help_text='Subrace name', null=False)
-    description = HTMLField('Subrace description', max_length=3000, help_text='Subrace description', null=True,
-                            blank=True)
-    ability_scores = models.JSONField(blank=True, null=True, default=dict)
+    description = HTMLField('Subrace description', max_length=3000, help_text='Subrace description', null=True, blank=True)
+    ability_scores = models.JSONField(blank=True, null=True)
     other_traits = models.ManyToManyField(RaceTraits)
 
     def __str__(self): return self.name
@@ -94,6 +94,11 @@ class Race(models.Model):
     subrace = models.ManyToManyField(Subrace, blank=True)
     ability_scores = models.JSONField(blank=True, null=True, default=dict)
     other_traits = models.ManyToManyField(RaceTraits)
+
+    @property
+    def img_url(self):
+        url = get_first_img(self.name)
+        return url
 
     def __str__(self): return self.name
 
@@ -115,12 +120,9 @@ class Character(models.Model):
 
     race = models.ForeignKey('Race', on_delete=models.SET_NULL, null=True)
     subrace = models.ForeignKey('Subrace', on_delete=models.SET_NULL, null=True, )
-
-    # Needs to be added as a choice
     ability_scores = models.JSONField(blank=True, null=True, default=dict)
 
     # # char_class = models.ForeignKey('')
-    # ability_scores = HStoreField(blank=True, null=True)
 
     def __str__(self): return f'{self.name} {self.last_name}'
 

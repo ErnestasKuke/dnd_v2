@@ -1,0 +1,9 @@
+.race-container {
+    margin: 1em;
+    padding: 1em;
+    border: 1px dotted black;
+}
+
+.race-container img {
+    width: 100%;
+}

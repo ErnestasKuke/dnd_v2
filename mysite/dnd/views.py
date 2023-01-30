@@ -8,24 +8,41 @@ from .models import Character, Race, Subrace
 
 
 # Create your views here.
-def home(request):
-    return render(request, 'home.html')
 
 
-# Create your views here.
+##################################################
+# ________________Race related views
+##################################################
+def race_list(request):
+    races = Race.objects.all
+    context = {
+        "races": races
+    }
+    return render(request, 'race/race_list.html', context=context)
 
+
+def race_detail(request, race_id):
+    race = get_object_or_404(Race, pk=race_id)
+    context = {
+        "race": race
+    }
+    return render(request, 'race/race_detail.html', context=context)
+
+
+##################################################
+# ________________Character related views
+##################################################
 def character_list(request):
     char_list = Character.objects.filter(player=request.user)
     context = {
         'char_list': char_list,
     }
-    return render(request, 'character_list.html', context=context)
+    return render(request, 'character/character_list.html', context=context)
 
 
 def character_detail(request, character_id):
     single_character = get_object_or_404(Character, pk=character_id)
-    subraces = Subrace.objects.filter(name__icontains=single_character.race.name)
-    return render(request, "character_detail.html", {"character": single_character, "subraces": subraces})
+    return render(request, "character/character_detail.html", {"character": single_character})
 
 
 @csrf_protect
@@ -76,12 +93,14 @@ def character_creation(request):
         }
         for score in character_abilityscores.keys():
             try:
-                character_abilityscores[score]["value"] = character_abilityscores[score]["value"] + race.ability_scores[score]
+                character_abilityscores[score]["value"] = character_abilityscores[score]["value"] + race.ability_scores[
+                    score]
             except KeyError:
                 pass
         for score in character_abilityscores.keys():
             try:
-                character_abilityscores[score]["value"] = character_abilityscores[score]["value"] + subrace.ability_scores[score]
+                character_abilityscores[score]["value"] = character_abilityscores[score]["value"] + \
+                                                          subrace.ability_scores[score]
             except KeyError:
                 pass
         for score in character_abilityscores.keys():
@@ -105,11 +124,21 @@ def character_creation(request):
         'race_choice': race_choice,
         'race_subrace': race_subrace
     }
-    return render(request, 'character_creator.html', context=context)
+    return render(request, 'character/character_creator.html', context=context)
 
 
+##################################################
+# ________________Monster related views
+##################################################
 def monster_list(request):
     return render(request, 'monster_list.html')
+
+
+##################################################
+# ________________System views
+##################################################
+def home(request):
+    return render(request, 'home.html')
 
 
 @csrf_protect

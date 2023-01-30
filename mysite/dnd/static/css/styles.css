@@ -27,14 +27,24 @@ h2 {
 
 h3 {
   font-size: 1.953rem;
+  color: var(--secondary-color);
+  text-align: left;
+  border-bottom: 2px solid var(--secondary-color);
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
 }
 
 h4 {
   font-size: 1.563rem;
+  color: var(--secondary-color);
+  margin-top: 0.4em;
 }
 
 h5 {
   font-size: 1.25rem;
+  color: var(--secondary-color);
+  font-weight: bold;
+  margin-top: 0.5em;
 }
 
 h6 {
@@ -183,7 +193,6 @@ nav {
 
 body {
   background-image: url(../img/background.jpg);
-/*   width: 360px; */
 }
 
 /* #endregion */
@@ -202,6 +211,7 @@ main {
 
 
 /* #region LOGIN */
+
 input[type="submit"] {
   font-weight: bold;
   margin: 1em;
@@ -210,5 +220,9 @@ input[type="submit"] {
   border: 3px double var(--secondary-color);
 }
 
+
+/* #endregion */
+
+/* #region Race-Class detail */
 
 /* #endregion */

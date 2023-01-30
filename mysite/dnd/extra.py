@@ -1,3 +1,9 @@
+import requests
+from bs4 import BeautifulSoup
+import os
+
+
+# Turns ability scores in to the bonuses that they add
 def calculate_bonus(number):
     bonus = 0
     if number == 1:
@@ -33,3 +39,14 @@ def calculate_bonus(number):
     elif number == 30:
         bonus = 10
     return bonus
+
+
+# Gets the url of the first image on google img search
+def get_first_img(name):
+    search = 'dnd' + '+' + name
+    url = "https://www.google.com/search?q=" + search + "&sxsrf=AJOqlzXgKKv_ete7_OUpdTStiq5cvWzyRw:1675077915766&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi_ro_Bl-_8AhWQuYsKHQqtDNsQ_AUoAXoECAEQAw&biw=1920&bih=929&dpr=1"
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, 'html.parser')
+    images = soup.find_all('img')
+    image = images[1]['src']
+    return image

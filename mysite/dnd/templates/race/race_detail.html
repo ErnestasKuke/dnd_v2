@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/race_class_detail.css' %}">
+
+<h2>{{race.name}}</h2>
+<div class="race-detail-container">
+    <img src={{race.img_url}} alt="image of a/an {{race.name}}" class="race-detail-img">
+    <h3>Race description</h3>
+    {{race.description|safe}}
+    <div class="race-details">
+        <h3>Base stats</h3>     
+        <h4>Size:</h4>
+        <p>{{race.size}}</p>
+
+        <h4>Speed:</h4>
+        <p>{{race.speed}} ft</p>
+
+        <h4>languages:</h4>
+        {% for language in race.languages.all %}
+        <div>
+            <h5>{{language.name}}</h5>
+            <p>Type: {{language.type}}</p>
+            <p>Script: {{language.script}}</p>
+            <p>Description: {{language.desc}}</p>
+        </div>
+
+        <h4>Ability scores:</h4>
+        {% for score, value in race.ability_scores.items%}
+        <p>{{score}}: +{{value}}</p>
+        {% endfor %}
+
+        <h3>Traits</h3>
+        {% for trait in race.other_traits.all %}
+        <h4>{{trait.name}}</h4>
+        <p>{{trait.description}}</p>
+        {% endfor %}
+
+        <h3>Subraces</h3>
+        {% for subrace in race.subrace.all %}
+        <h4>{{subrace.name}}</h4>
+        <p>{{subrace.description|safe}}</p>
+        <h5>Ability Scores:</h5>
+        {% for score, value in subrace.ability_scores.items %}
+        <p>{{score}}: +{{value}}</p>
+        {% endfor %}
+        <h5>Traits</h5>
+        {% for trait in subrace.other_traits.all %}
+        <h6>{{trait.name}}</h6>
+        <p>{{trait.description}}</p>
+        {% endfor %}
+        {% endfor %}
+        
+
+        
+
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

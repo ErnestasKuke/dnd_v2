@@ -9,7 +9,7 @@
     <meta name="description" content="WebSite Generator" />
     <meta name="keywords" content="WebSite, Web, Web-Dev, Development, HTML, CSS" />
     <title>DnD app</title>
-    <link rel="icon" type="image/x-icon" href="images/">
+<!--    <link rel="icon" type="image/x-icon" href="images/">-->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -47,7 +47,7 @@
                   <li><a href="{% url 'monster-list' %}">My monster list</a></li>
                   {% endif %}
                   <li><a href="#">Beastiary</a></li>
-                  <li><a href="#">Races</a></li>
+                  <li><a href="{% url 'race-list' %}">Races</a></li>
                   <li><a href="#">Classes</a></li>
                 </ul>
               </div>

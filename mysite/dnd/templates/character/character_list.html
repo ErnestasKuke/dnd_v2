@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>My Character List</h2>
+
+
+<table>
+    <tr>
+        <td>Name</td>
+        <td>Last Name</td>
+        <td>Race/subrace</td>
+    </tr>
+    {% for item in char_list %}
+    
+        <tr>
+            <td><a href="{% url 'character-detail' item.id %}">{{item.name}}</a></td>
+            <td><a href="{% url 'character-detail' item.id %}"">{{item.last_name}}</a></td>
+            <td><a href="{% url 'character-detail' item.id %}"">{{item.race.name}}</a></td>
+            
+        </tr>
+    </a>
+    {% endfor %}
+</table>
+<p></p>
+
+
+
+<a href="{% url 'char-create' %}"><button>Create a new character</button></a>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<!-- Base information -->
+<h2>{{character.name}} {{character.last_name}}</h2>
+<p>{{character.race.name}}({{character.subrace.name}})</p>
+<h3>Ability scores</h3>
+{% for score, value in character.ability_scores.items%}
+<h4>{{score}}</h4>
+    {% for bonus, number in value.items %}
+    <p>{{bonus}} {{number}}</p>
+    {% endfor %}
+{% endfor %}
+
+<!-- Character traits -->
+<h3>Character traits</h3>
+{% for trait in character.race.other_traits.all   %}
+<h4>{{trait.name}}</h4>
+<p>{{trait.description}}</p>
+{% endfor %}
+{% for trait in character.subrace.other_traits.all   %}
+<h4>{{trait.name}}</h4>
+<p>{{trait.description}}</p>
+{% endfor %}
+
+
+
+<!-- Character descriptions -->
+<h3>Description</h3>
+<h4>Appearance</h4>
+<p>{{character.appearance}}</p>
+<h4>Personality</h4>
+<p>{{character.personality}}</p>
+<h4>Backstory</h4>
+<p>{{character.backstory}}</p>
+
+
+
+{% endblock %}
