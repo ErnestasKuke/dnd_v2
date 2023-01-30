@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Character Creator</h2>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    <div>
+        <label for="name">Characters name:</label>
+        <input name="name" id="name" type="text">
+    </div>
+
+    <div>
+        <label for="last-name">Characters last name:</label>
+        <input name="last-name" id="last-name" type="text">
+    </div>
+
+    <div>
+        <label for="personality">Characters personality</label>
+        <textarea name="personality" id="personality" cols="30" rows="10"></textarea>
+    </div>
+
+    <div>
+        <label for="appearance">Characters appearance</label>
+        <textarea name="appearance" id="appearance" cols="30" rows="10"></textarea>
+    </div>
+
+    <div>
+        <label for="backstory">Characters backstory</label>
+        <textarea name="backstory" id="backstory" cols="30" rows="10"></textarea>
+    </div>
+
+    <div>
+        <label for="race">Characters race</label>
+        <select name="race" id="race" class="race">
+            {% for race in race_choice %}
+            <option value="{{race.name}}">{{race.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label for="subrace">Characters subrace</label>
+        <select name="subrace" id="subrace">
+
+        </select>
+    </div>
+
+    <div>
+        <div>
+            <label for="character-strength">Strength</label>
+            <input name="character-strength" id="character-strength" type="number">
+        </div>
+        <div>
+            <label for="character-dexterity">Dexterity</label>
+            <input name="character-dexterity" id="character-dexterity" type="number">
+        </div>
+        <div>
+            <label for="character-constitution">Constitution</label>
+            <input name="character-constitution" id="character-constitution" type="number">
+        </div>
+        <div>
+            <label for="character-intelligence">Intelligence</label>
+            <input name="character-intelligence" id="character-intelligence" type="number">
+        </div>
+        <div>
+            <label for="character-wisdom">Wisdom</label>
+            <input name="character-wisdom" id="character-wisdom" type="number">
+        </div>
+        <div>
+            <label for="character-charisma">Charisma</label>
+            <input name="character-charisma" id="character-charisma" type="number">
+        </div>
+    </div>
+
+
+    
+    <button type="submit">Create</button>
+
+
+</form>
+
+{% load static %}
+<script>
+    data = {{race_subrace | safe}}
+</script>
+<script src="{% static 'javascript/character_creation.js' %}"></script>
+
+{% endblock %}
+

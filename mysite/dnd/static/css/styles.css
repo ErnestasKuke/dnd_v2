@@ -1,0 +1,214 @@
+/* #region ColorScheme */
+:root {
+  --primary-color: brown;
+  --secondary-color: rgb(112, 24, 24);
+  --main-bg-color: #F6EBCD;
+  --secondary-bg-color: rgb(26, 0, 0);
+  --nav-width: 150px;
+}
+/* #endregion */
+
+
+/* #region Font Scales */
+/*! Font Scale = 1.250 Major Third */
+h1 {
+  font-size: 3.052rem;
+}
+
+h2 {
+  font-size: 2.441rem;
+  color: var(--secondary-color);
+  font-style: italic;
+  font-weight: bolder;
+  margin-bottom: 0.2em;
+  padding-bottom: 0.2em;
+  border-bottom: 2px solid var(--secondary-color);
+}
+
+h3 {
+  font-size: 1.953rem;
+}
+
+h4 {
+  font-size: 1.563rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+main p {
+  font-size: 1.2rem;
+  margin: 1em;
+}
+/* #endregion */
+
+
+/* #region HELPERS */
+.margin {
+  margin-left: calc(var(--nav-width) + 2vw - 95px);
+  margin-right: 2vw;
+  margin-top: 2vh;
+  text-align: center;
+}
+
+table {
+  margin: auto;
+}
+
+p a {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+label {
+  display: block;
+}
+
+form div {
+  margin: 1em;
+}
+/* #endregion */
+
+
+/* #region Base */
+.logo {
+  background-image: url(../img/section_background.jpg);
+  background-size: contain;
+  box-shadow: 0 0 15px 15px #F6EBCD inset, 0 0 15px 15px #F6EBCD;
+  padding: 1em 1em 1em 1em;
+}
+
+.logo p {
+  font-size: 1.3rem;
+  margin: 0.5em;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid var(--secondary-color);
+}
+
+
+.logo ul li a {
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: underline;
+  color: var(--secondary-color);
+}
+ li {
+  display: inline-block;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+ }
+
+
+nav {
+  position: fixed;
+  top: 0;
+}
+.nav {
+  display: inline-block;
+  height: 100vh;
+  width: var(--nav-width);
+  border-radius: 0px 100% 100% 0;
+  transform: translateX(-95px);
+  background-color: rgba(112, 24, 24, 0.8);
+
+}
+
+.nav-burger {
+  position: absolute;
+  bottom: 50%;
+  right: 0;
+  display: flex;
+}
+
+.nav div p {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.nav div svg {
+  width: 35px;
+}
+
+.nav-menu {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.747);
+  text-align: center;
+  transform: translateX(-100%);
+  border-radius: 100% 0% 100% 100%;
+  transition: all 0.7s;
+}
+
+.expanded {
+  transform: unset;
+  border-radius: 0%;
+}
+
+.nav-menu-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menu-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 75px;
+}
+
+.nav-menu div ul li {
+  display:block;
+  width: 200px;
+  margin: 1em;
+  border-bottom: 1px solid black;
+  
+}
+
+.nav-menu div ul li a {
+  font-size: 2rem;
+}
+
+body {
+  background-image: url(../img/background.jpg);
+/*   width: 360px; */
+}
+
+/* #endregion */
+
+
+/* #region Home */
+main {
+  background-image: url(../img/section_background.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 0 15px 15px #F6EBCD inset, 0 0 15px 15px #F6EBCD;
+  padding: 1em 1em 1em 1em;
+}
+/* #endregion */
+
+
+/* #region LOGIN */
+input[type="submit"] {
+  font-weight: bold;
+  margin: 1em;
+  padding: 0.5em 1.5em;
+  background-color: var(--main-bg-color);
+  border: 3px double var(--secondary-color);
+}
+
+
+/* #endregion */

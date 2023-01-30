@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Log in</h2>
+{% if form.errors %}
+<p>User does not exist, please try again!</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>You need to log in.</p>
+{% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>User Name:</td>
+        </tr>
+        <tr>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td><p></p></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+        </tr>
+        <tr>
+            <td>{{ form.password }}</td>
+        </tr>
+    </table>
+    <input type="submit" value="Log In"/>
+    <input type="hidden" name="next" value="{{ next }}"/>
+</form>
+
+<p><a href="{% url 'password_reset' %}"><strong>Forgot your password?</strong></a></p>
+
+{% endblock %}
