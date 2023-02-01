@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/race_class_detail.css' %}">
+
+<h2>{{monster.name}}</h2>
+<p>{{monster.size}} {{monster.type}}, {{monster.alignment}}</p>
+<div class="race-detail-container">
+    <img src={{monster.img_url}} alt="image of a/an {{monster.name}}" class="race-detail-img">
+    <div class="race-details">
+        <h3>Base stats</h3>     
+        <h4>Armor class:</h4>
+        <p>{{monster.armor_class}}</p>
+
+        <h4>Hit Points:</h4>
+        <p>{{monster.hit_points}} ft</p>
+
+        <h4>Speed:</h4>
+        {% for type, value in monster.speed.items %}
+        <p>{{type}}: {{value}} ft</p>
+        {% endfor %}
+
+        <h3>Ability scores</h3>
+        {% for name, data in monster.ability_scores.items%}
+        <h4>{{name}}</h4>
+        {% for score, bonus in data.items  %}
+        <p>{{score}} {{bonus}}</p>
+        {% endfor %}
+        {% endfor %}
+
+
+        <h3>Other stats</h3>
+        <h4>Skills</h4>
+        {% for name, value in monster.skills.items %}
+        <h5>{{name}}</h5>
+        <p>{{value}}</p>
+        {% endfor %}
+
+        <h4>Senses</h4>
+        <p>{{monster.senses}}</p>
+
+        <h4>Languages</h4>
+        <p>{{monster.languages}}</p>
+
+        <h4>Challenge rating:</h4>
+        <p>{{monster.challenge_rating}}</p>
+
+        <h3>Special Abilities</h3>
+        {% for name, value in monster.special_abilities.items %}
+        <h5>{{name}}</h5>
+        <p>{{value}}</p>
+        {% endfor %}
+
+        <h3>Actions</h3>
+        {% for name, data in monster.actions.items %}
+        <h5>{{name}}</h5>
+        {% for key, value in data.items %}
+        <h6>{{key}}</h6>
+        <p>{{value}}</p>
+        {% endfor %}
+        {% endfor %}
+
+        <h3>Legendary Actions</h3>
+        <p>{{monster.legendary_desc}}</p>
+        {% for name, data in monster.legendary_actions.items %}
+        <h5>{{name}}</h5>
+        <p>{{data}}</p>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

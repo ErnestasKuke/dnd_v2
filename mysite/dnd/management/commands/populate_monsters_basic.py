@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from dnd.models import Monster
+from dnd.extra import calculate_bonus
 import json
 import requests
 
@@ -19,16 +20,71 @@ class Command(BaseCommand):
             alignment = monster['alignment']
             armor_class = monster['armor_class']
             hit_points = monster['hit_points']
-            speed = json.dumps(monster['speed'])
+
+            # Gather speed data
+            speed = {}
+            for key in monster["speed"].keys():
+                speed[key] = monster["speed"][key]
+
+            # Gather ability scores and add ability bonus
             ability_scores = {
-                "strength": monster['strength'],
-                "dexterity": monster['dexterity'],
-                "constitution": monster['constitution'],
-                "intelligence": monster['intelligence'],
-                "wisdom": monster['wisdom'],
-                "charisma": monster['charisma']
+                "strength": {
+                    "value": monster['strength'],
+                    "bonus": 5
+                },
+                "dexterity": {
+                    "value": monster['dexterity'],
+                    "bonus": 5
+                },
+                "constitution": {
+                    "value": monster['constitution'],
+                    "bonus": 5
+                },
+                "intelligence": {
+                    "value": monster['intelligence'],
+                    "bonus": 5
+                },
+                "wisdom": {
+                    "value": monster['wisdom'],
+                    "bonus": 5
+                },
+                "charisma": {
+                    "value": monster['charisma'],
+                    "bonus": 5
+                },
             }
-            x = 'filler'
+            for score in ability_scores.keys():
+                ability_scores[score]["bonus"] = calculate_bonus(ability_scores[score]["value"])
+
+            # Gather skill data
+            skills = {}
+            for key in monster["skills"].keys():
+                skills[key] = monster["skills"][key]
+
+            senses = monster['senses']
+            languages = monster['languages']
+            challenge_rating = monster['challenge_rating']
+
+            # Gather actions and transform them to fit the JSON format
+            actions = {}
+            for action in monster["actions"]:
+                actions[action["name"]] = {}
+                for key in action.keys():
+                    if key != "name":
+                        actions[action["name"]][key] = action[key]
+
+            legendary_desc = monster['legendary_desc']
+
+            # Gather legendary actions and transform them to fit JSON format
+            legendary_action = {}
+            for action in monster["legendary_actions"]:
+                legendary_action[action["name"]] = action["desc"]
+
+            # Gather special abilities and transform them to fit JSON format
+            special_abilities = {}
+            for ability in monster["special_abilities"]:
+                special_abilities[ability["name"]] = ability["desc"]
+
             monster = Monster(
                 name=name,
                 size=size,
@@ -38,15 +94,15 @@ class Command(BaseCommand):
                 hit_points=hit_points,
                 speed=speed,
                 ability_scores=ability_scores,
-                skills=x,
-                senses=x,
-                languages=x,
-                challenge_rating=x,
-                actions=x,
-                reactions=x,
-                legendary_desc=x,
-                legendary_actions=x,
-                special_abilities=x
+                skills=skills,
+                senses=senses,
+                languages=languages,
+                challenge_rating=challenge_rating,
+                actions=actions,
+                legendary_desc=legendary_desc,
+                legendary_actions=legendary_action,
+                special_abilities=special_abilities,
+                book_source="Basic rules"
             )
             monster.save()
 

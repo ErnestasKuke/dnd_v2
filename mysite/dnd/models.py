@@ -133,34 +133,44 @@ class Character(models.Model):
 
 
 class Monster(models.Model):
+    player = models.ManyToManyField(User)
     name = models.CharField('Name', max_length=200, help_text='Monsters name', null=True, blank=True)
     size = models.CharField('Size', max_length=200, help_text='Monsters size', null=True, blank=True)
     type = models.CharField('Type', max_length=200, help_text='Monsters type', null=True, blank=True)
     alignment = models.CharField('Alignment', max_length=200, help_text='Monsters type', null=True, blank=True)
-    armor_class = models.IntegerField('Armor Class', max_length=200, help_text='Monsters Armor Class', null=True,
+    armor_class = models.IntegerField('Armor Class', help_text='Monsters Armor Class', null=True,
                                       blank=True)
-    hit_points = models.IntegerField('Hit Points', max_length=200, help_text='Monsters Hit points', null=True,
+    hit_points = models.IntegerField('Hit Points', help_text='Monsters Hit points', null=True,
                                      blank=True)
     speed = models.JSONField('Speed', null=True, blank=True)
     ability_scores = models.JSONField('Ability Scores', null=True, blank=True)
     skills = models.JSONField('Skills', null=True, blank=True)
     senses = models.CharField('Senses', max_length=200, help_text='Monsters senses', null=True, blank=True)
     languages = models.CharField('Languages', max_length=200, help_text='Monsters language', null=True, blank=True)
-    challenge_rating = models.IntegerField('Challenge Rating', max_length=200, help_text='Monsters Challenge rating',
-                                           null=True, blank=True)
+    challenge_rating = models.CharField('Challenge Rating', max_length=200, help_text='Monsters Challenge rating',
+                                        null=True, blank=True)
     actions = models.JSONField('Actions', null=True, blank=True)
     reactions = models.JSONField('Reactions', null=True, blank=True)
     legendary_desc = models.TextField('Legendary Description', max_length=1000,
                                       help_text='Monsters Legendary Action Description', null=True, blank=True)
     legendary_actions = models.JSONField('Legendary Actions', null=True, blank=True)
     special_abilities = models.JSONField('Special Abilities', null=True, blank=True)
+    book_source = models.CharField('Book Source', max_length=200, help_text='What book is this monster from', null=True,
+                                   blank=True)
 
     @property
     def img_url(self):
         url = get_first_img(self.name)
         return url
 
-    def __str__(self): return {self.name}
+    @property
+    def get_usernames(self):
+        usernames = []
+        for user in self.player.all():
+            usernames.append(user.username)
+        return usernames
+
+    def __str__(self): return self.name
 
     class Meta:
         verbose_name = 'Monster'

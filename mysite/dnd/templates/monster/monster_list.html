@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+
+
+<!-- Content -->
+<h2>Beastiary</h2>
+
+<div class="monster-search">
+  <form action="{% url destination %}" method="get">
+    <input type="text" name="name" placeholder="Search by name">
+    <input type="text" name="type" placeholder="Search by type">
+    <input type="number" name="challenge-rating" placeholder="Search by challenge-rating">
+    <button type="submit">Search</button>
+  </form>
+</div>
+
+<div class="flex-table">
+    <p>Name</p>
+    <p>Type</p>
+    <p>Alignment</p>
+    <p>Challenge rating</p>
+    <p>Hit Points</p>
+    <p>Add to my monster list </p>
+</div>
+
+{% for monster in monsters%}
+  <div class="flex-table">
+      <a href="{% url 'monster-detail' monster.id %}"><p>{{monster.name}}</p></a>
+      <a href="{% url 'monster-detail' monster.id %}"><p>{{monster.type}}</p></a>
+      <a href="{% url 'monster-detail' monster.id %}"><p>{{monster.alignment}}</p></a>
+      <a href="{% url 'monster-detail' monster.id %}"><p>{{monster.challenge_rating}}</p></a>
+      <a href="{% url 'monster-detail' monster.id %}"><p>{{monster.hit_points}}</p></a>
+
+
+      {% if user.get_username in monster.get_usernames %}
+      <form action="" method="POST">
+      {% csrf_token %}
+        <button type="submit" value="{{monster.id}}" name="remove-monster-id">
+          <img src="{% static 'img/remove_icon.png' %}" alt="Done icon">
+        </button>
+      </form>
+      {% else %}
+      <form action="" method="POST">
+      {% csrf_token %}
+        <button type="submit" value="{{monster.id}}" name="add-monster-id">
+          <img src="{% static 'img/done_icon.png' %}" alt="Done icon">
+        </button>
+      </form>
+      {% endif %}
+
+  </div>
+{%endfor%}
+
+<!-- Pagination -->
+{% if monsters.has_other_pages %}
+    <div>
+      <ul>
+        {% if monsters.has_previous %}
+          <li>
+            <a href="?page={{ monsteers.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {% else %}
+          <li>
+              <span aria-hidden="true">&laquo;</span>
+          </li>
+        {% endif %}
+
+        {% for p in monsters.paginator.page_range %}
+          {% if monsters.number == p %}
+            <li ><a style="color: red;" href="#">{{ p }}</a></li>
+          {% else %}
+            <li><a href="?page={{ p }}">{{ p }}</a></li>
+          {% endif %}
+        {% endfor %}
+
+        {% if monsters.has_next %}
+          <li>
+            <a href="?page={{ posts.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {% else %}
+          <li>
+            <span aria-hidden="true">&raquo;</span>
+          </li>
+        {% endif %}
+    </ul>
+    </div>
+  {% endif %}
+
+
+
+{% endblock %}

@@ -7,3 +7,22 @@
 .race-container img {
     width: 100%;
 }
+
+
+@media only screen and (min-width: 600px) {
+    .race-container {
+        padding-left: 30%;
+        padding-right: 30%;
+    }
+  }
+
+@media only screen and (min-width: 1000px) {
+.race-container {
+    padding-left: 30%;
+    padding-right: 30%;
+}
+.race-container img {
+    width: 70%;
+}
+
+}

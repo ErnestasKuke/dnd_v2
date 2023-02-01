@@ -44,11 +44,10 @@
                   <li><a href="{% url 'home' %}">Home</a></li>
                   {% if user.is_authenticated %}
                   <li><a href="{% url 'character-list' %}">My characters</a></li>
-                  <li><a href="{% url 'monster-list' %}">My monster list</a></li>
+                  <li><a href="{% url 'user-monster-list' %}">My monster list</a></li>
                   {% endif %}
-                  <li><a href="#">Beastiary</a></li>
+                  <li><a href="{% url 'monster-list' %}">Beastiary</a></li>
                   <li><a href="{% url 'race-list' %}">Races</a></li>
-                  <li><a href="#">Classes</a></li>
                 </ul>
               </div>
             </div>

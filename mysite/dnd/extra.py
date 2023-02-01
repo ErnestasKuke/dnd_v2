@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 import os
 
 
@@ -50,3 +52,45 @@ def get_first_img(name):
     images = soup.find_all('img')
     image = images[1]['src']
     return image
+
+
+def monster_list_manipulation(request, model_class):
+    if request.method == "POST":
+        if request.POST.get('add-monster-id'):
+            monster_id = request.POST['add-monster-id']
+            add_monster = model_class.objects.get(id=monster_id)
+            add_monster.player.add(request.user)
+        else:
+            monster_id = request.POST['remove-monster-id']
+            remove_monster = model_class.objects.get(id=monster_id)
+            remove_monster.player.remove(request.user)
+
+
+def paginate_lists(request, list_to_paginate, search_url):
+    page = request.GET.get('page', 1)
+    paginator = Paginator(list_to_paginate, 10)
+
+    try:
+        monsters = paginator.page(page)
+    except PageNotAnInteger:
+        monsters = paginator.page(1)
+    except EmptyPage:
+        monsters = paginator.page(paginator.num_pages)
+
+    context = {
+        'monsters': monsters,
+        'destination': search_url
+    }
+    return context
+
+
+def search_mlist(request, objectlist_to_search):
+    name_query = request.GET.get('name')
+    monster_type = request.GET.get('type')
+    challenge_rating_query = request.GET.get('challenge-rating')
+    searched_list = objectlist_to_search.filter(
+        Q(name__icontains=name_query),
+        Q(type__icontains=monster_type),
+        Q(challenge_rating__icontains=challenge_rating_query)
+    )
+    return searched_list

@@ -1,0 +1,13 @@
+.flex-table {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    margin: 0 0.8em 0 0.8em;
+}
+
+.flex-table * {
+    flex-grow: 1;
+    flex-basis: 0;
+}

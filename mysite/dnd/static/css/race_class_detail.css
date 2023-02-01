@@ -15,3 +15,21 @@
     margin: 0;
     padding: 0;
   }
+
+  .race-container img {
+    width: 100%;
+}
+
+
+@media only screen and (min-width: 600px) {
+    .race-detail-container {
+        padding-left: 30%;
+        padding-right: 30%;
+    }    
+
+    .race-detail-container img {
+        width: 70%;
+        margin: auto !important;
+    }
+    
+    }

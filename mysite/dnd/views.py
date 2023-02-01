@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.contrib.auth.forms import User
+from django.db.models import Q
 import json
-from .extra import calculate_bonus
-from .models import Character, Race, Subrace
+from .extra import calculate_bonus, monster_list_manipulation, paginate_lists, search_mlist
+from .models import Character, Race, Subrace, Monster
 
 
 # Create your views here.
@@ -130,8 +131,45 @@ def character_creation(request):
 ##################################################
 # ________________Monster related views
 ##################################################
+@csrf_protect
 def monster_list(request):
-    return render(request, 'monster_list.html')
+    search_url = "monster-list-search"
+    monsters_list = Monster.objects.all()
+    # Ability to add or remove from my monster list
+    monster_list_manipulation(request, Monster)
+    return render(request, 'monster/monster_list.html', context=paginate_lists(request, monsters_list, search_url))
+
+
+def monster_list_search(request):
+    search_url = "monster-list-search"
+    starting_list = Monster.objects.all()
+    monsters_list = search_mlist(request, starting_list)
+    # Ability to add or remove from my monster list
+    monster_list_manipulation(request, Monster)
+    return render(request, 'monster/monster_list.html', context=paginate_lists(request, monsters_list, search_url))
+
+
+def monster_detail(request, monster_id):
+    single_monster = get_object_or_404(Monster, pk=monster_id)
+    return render(request, "monster/monster_detail.html", {"monster": single_monster})
+
+
+@csrf_protect
+def user_monster_list(request):
+    search_url = "user-monster-list-search"
+    monsters_list = Monster.objects.filter(player=request.user)
+    # Ability to add or remove from my monster list
+    monster_list_manipulation(request, Monster)
+    return render(request, 'monster/monster_list.html', context=paginate_lists(request, monsters_list, search_url))
+
+
+def user_monster_list_search(request):
+    search_url = "user-monster-list-search"
+    starting_list = Monster.objects.filter(player=request.user)
+    monsters_list = search_mlist(request, starting_list)
+    # Ability to add or remove from my monster list
+    monster_list_manipulation(request, Monster)
+    return render(request, 'monster/monster_list.html', context=paginate_lists(request, monsters_list, search_url))
 
 
 ##################################################

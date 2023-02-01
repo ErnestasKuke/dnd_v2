@@ -89,7 +89,9 @@ form div {
 /* #region Base */
 .logo {
   background-image: url(../img/section_background.jpg);
-  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   box-shadow: 0 0 15px 15px #F6EBCD inset, 0 0 15px 15px #F6EBCD;
   padding: 1em 1em 1em 1em;
 }

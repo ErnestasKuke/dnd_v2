@@ -8,10 +8,10 @@
 {% for race in races %}
 <a href="{% url 'race-detail' race.id %}">
     <div class="race-container">
-    <h3>{{race.name}}</h3>
-    <img src={{race.img_url}} alt="image of a/an {{race.name}}">
-    <p>{{race.description|truncatewords:30|safe}}</p>
-</div>
+        <h3>{{race.name}}</h3>
+        <img src={{race.img_url}} alt="image of a/an {{race.name}}">
+        <p>{{race.description|truncatewords:30|safe}}</p>
+    </div>
 </a>
 
 {% endfor %}
